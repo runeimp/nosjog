@@ -46,11 +46,17 @@ func Pretty(jsonBytes []byte) []byte {
 	return pretty.PrettyOptions(jsonBytes, prettyOptions)
 }
 
-// Println takes an object and converts it to JSON bytes then colorizes it for terminal output before printing
-func Println(content interface{}) {
+// MarshalPrintln takes an object and converts it to JSON bytes then colorizes it for terminal output before printing
+func MarshalPrintln(content interface{}) {
 	jsonBytes, _ := Marshal(content)
-	jsonString := Terminal(jsonBytes)
-	fmt.Println(string(jsonString))
+	jsonBytes = Terminal(jsonBytes)
+	fmt.Println(string(jsonBytes))
+}
+
+// Println takes JSON bytes then colorizes it for terminal output before printing
+func Println(jsonBytes []byte) {
+	jsonBytes = Terminal(jsonBytes)
+	fmt.Println(string(jsonBytes))
 }
 
 // Terminal colorizes JSON bytes with terminal escape codes
